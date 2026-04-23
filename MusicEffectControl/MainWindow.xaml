@@ -1,0 +1,243 @@
+﻿<Window x:Class="MusicEffectControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicEffectControl"
+        mc:Ignorable="d"
+        Title="MusicEffectControl" Height="700" Width="500" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" PreviewKeyDown="Window_PreviewKeyDown" InputMethod.IsInputMethodEnabled="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.25*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Name="Header" Background="#FF1578B5" Panel.ZIndex="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" PreviewMouseDown="NavDown" Tag="主持音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            主持音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1" PreviewMouseDown="NavDown" Tag="喊麦音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            喊麦音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="2" PreviewMouseDown="NavDown" Tag="搞笑音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            搞笑音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="3" PreviewMouseDown="NavDown" Tag="游戏音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            游戏音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="4" PreviewMouseDown="NavDown" Tag="生活音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            生活音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="5" PreviewMouseDown="NavDown" Tag="DIY音效">
+                    <Border Opacity="0.4" Background="White" Panel.ZIndex="0" CornerRadius="8" Margin="5" Cursor="Hand">
+
+                    </Border>
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="999" Margin="0 5 0 0" Cursor="Hand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="23"/>
+                        </Grid.RowDefinitions>
+                        <Image Width="30" Height="30" Source="/MusicIco.png" Stretch="Fill" Grid.Row="0" >
+                        </Image>
+
+                        <Label Foreground="White" Grid.Row="1" FontSize="9" Margin="0 0 0 0 ">
+                            DIY音效
+                        </Label>
+                    </Grid>
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+        <Image Source="/LoginBG.jpg"  Panel.ZIndex="0" Grid.Row="1" Grid.RowSpan="2" Stretch="UniformToFill">
+        </Image>
+
+
+        <Grid Name="MusicSelecter" Grid.Row="1">
+
+            <Border Margin="1,0,1,0" BorderThickness="1" BorderBrush="Black" Opacity="0.7" Background="#FFBAE5FF" Panel.ZIndex="999" CornerRadius="2">
+               
+            </Border>
+
+            <Grid Name="MusicLists" Panel.ZIndex="99999" Margin="0 10 0 0">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer.Content>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
+                    </ScrollViewer.Content>
+                </ScrollViewer>
+            </Grid>
+
+
+        </Grid>
+        <Grid Name="Footer" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Border Margin="1,0,1,0" BorderThickness="1" BorderBrush="Black" Opacity="0.7" Background="#FFBAE5FF" Panel.ZIndex="999" CornerRadius="2">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label>
+                                音效音量:
+                            </Label>
+
+                            <Canvas Width="180" VerticalAlignment="Center" Height="10"  MouseDown="ChangeVolume" MouseUp="DontMoveVolume" Name="MusicVolumeControl" MouseLeave="MusicVolumeControl_MouseLeave" Cursor="Hand">
+                                <Grid Name="ProcessBar" Width="180" Height="10" VerticalAlignment="Center" Background="White" Panel.ZIndex="0">
+                                </Grid>
+                                <Grid Name="EffectBar" Width="0" Height="10" VerticalAlignment="Center" Background="#FF00B0FF" Panel.ZIndex="1">
+                                </Grid>
+                            </Canvas>
+
+                            <Button Click="SetTopBtn" Margin="10 0 10 0" Cursor="Hand">
+                                窗口置顶
+                            </Button>
+                            <Button  Margin="10 0 10 0" Cursor="Hand" Click="PauseMusic">
+                                暂停播放
+                            </Button>
+                            <Button  Margin="10 0 10 0" Cursor="Hand" Click="EndMusic">
+                                停止播放
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Border Margin="1,0,1,0" BorderThickness="1" BorderBrush="Black" Opacity="0.7" Background="#FFBAE5FF" Panel.ZIndex="999" CornerRadius="2">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Label>
+                                通道选择:
+                            </Label>
+
+                            <ComboBox Width="270" VerticalAlignment="Center" Name="SoundDevice" Background="{x:Null}" SelectionChanged="SoundDevice_SelectionChanged">
+                            </ComboBox>
+
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label>
+                               开启快捷键:
+                            </Label>
+
+                            <CheckBox Name="CanSetHotKey" VerticalAlignment="Center" Click="CanSetHotKey_Click">
+                            </CheckBox>
+
+                            <Label>
+                                重复音效:
+                            </Label>
+
+                            <CheckBox Name="CanLoop" VerticalAlignment="Center" Click="CanLoop_Click">
+                            </CheckBox>
+
+                            <Button VerticalAlignment="Center" Margin="5 0 0 0" Cursor="Hand" Click="AddLocalMusics">
+                                添加固定音效
+                            </Button>
+
+                            <Button VerticalAlignment="Center" Margin="5 0 0 0" Cursor="Hand" Click="AddMusic">
+                                添加新音效
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+      
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="MusicEffectControl.AddConstMusic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicEffectControl"
+        mc:Ignorable="d"
+        Title="AddConstMusic" Height="150" Width="300" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                <Label>
+                    文件夹路径
+                </Label>
+                <TextBox Width="150" Name="FilePath">
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 5 0 0" VerticalAlignment="Center">
+                <Label>
+                    导入标签
+                </Label>
+                <ComboBox Width="100" Name="ConstTags">
+                </ComboBox>
+            </StackPanel>
+            <Button Margin="0 5 0 0" Click="Button_Click">
+                一键导入
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

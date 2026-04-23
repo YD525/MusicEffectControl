@@ -1,0 +1,17 @@
+﻿<Window x:Class="MusicEffectControl.CheckHotKey"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicEffectControl"
+        mc:Ignorable="d"
+        Title="CheckHotKey" Height="300" Width="300" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" InputMethod.IsInputMethodEnabled="False" >
+    <Grid Background="#FF616161">
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Name="HotKeyLab" FontSize="30">
+            请按下任意键
+        </Label>
+        <Button VerticalAlignment="Bottom" Height="35" Width="100" Margin="0 0 0 10" Click="Button_Click" InputMethod.IsInputMethodEnabled="False">
+            确认
+        </Button>
+    </Grid>
+</Window>
