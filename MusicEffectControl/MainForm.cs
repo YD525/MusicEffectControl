@@ -20,234 +20,258 @@ using System.Threading;
 
 namespace Sound_Editor
 {
+
+    /*
+    LICENSE
+    -------
+    Copyright (C) 2007-2010 Ray Molenkamp
+
+    This source code is provided 'as-is', without any express or implied
+    warranty.  In no event will the authors be held liable for any damages
+    arising from the use of this source code or the software it produces.
+
+    Permission is granted to anyone to use this source code for any purpose,
+    including commercial applications, and to alter it and redistribute it
+    freely, subject to the following restrictions:
+
+    1. The origin of this source code must not be misrepresented; you must not
+       claim that you wrote the original source code.  If you use this source code
+       in a product, an acknowledgment in the product documentation would be
+       appreciated but is not required.
+    2. Altered source versions must be plainly marked as such, and must not be
+       misrepresented as being the original source code.
+    3. This notice may not be removed or altered from any source distribution.
+    */
+
+    //This class is an improvement based on the source code of Ray Molenkamp.
     public partial class MainForm : Form
-    {
-        public MainForm()
-        {
-            InitializeComponent();
-        }
+      {
+          public MainForm()
+          {
+              InitializeComponent();
+          }
 
-        public static Position originalPosition = null;
-        public static TimePeriod allocatedPeriod = null;
-
-
-        private List<AudioFile> files = new List<AudioFile>();
-        private AudioFile currentAudio = null;
-        private WaveOut output = null;
- 
-        private Directions direction;
-        private int tmpCount = 0;
+          public static Position originalPosition = null;
+          public static TimePeriod allocatedPeriod = null;
 
 
-        private WaveFileWriter waveWriter = null;
+          private List<AudioFile> files = new List<AudioFile>();
+          private AudioFile currentAudio = null;
+          private WaveOut output = null;
 
-        public string CurrentFile = "";
-
-        public int CurrentRowid = 0;
-
-        public void SetMp3File(int Rowid,string Source,string TimeRange)
-        {
-            if (TimeRange.Trim().Length > 0)
-            {
-                if (TimeRange.Contains("-"))
-                {
-                    long GetStart = ConvertHelper.ObjToLong(TimeRange.Split('-')[0]);
-                    long GetEnd = ConvertHelper.ObjToLong(TimeRange.Split('-')[1]);
-
-                    originalWaveViewer.CutStart = new TimeSpan(GetStart);
-                    originalWaveViewer.CutEnd = new TimeSpan(GetEnd);
-
-                    DeFine.ActiveEdit.CutTimeByStart.Text = (originalWaveViewer.CutStart.Ticks * 100).ToString();
-                    DeFine.ActiveEdit.CutTimeByEnd.Text = (originalWaveViewer.CutEnd.Ticks * 100).ToString();
-                    originalWaveViewer.FitToScreen();
-                }
-            }
-            CurrentRowid = Rowid;
-
-            AudioFile file = null;
-            Mp3FileReader reader = new Mp3FileReader(Source);
-            WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(reader);
-            BlockAlignReductionStream stream = new BlockAlignReductionStream(pcm);
-            file = new MP3File(reader, stream, Source);
-
-            files.Add(file);
-
-            if (files.Count == 1)
-            {
-                this.initAudio(file);
-            }
-            CurrentFile = Source;
-        }
-
-        void CutMp3(string filePath, string outputPath, TimeSpan start, TimeSpan end)
-        {
-            try
-            {
-                start = new TimeSpan(start.Ticks * 100);
-                end = new TimeSpan(end.Ticks * 100);
-                //读取mp3音频文件
-                using (var reader = new Mp3FileReader(filePath))
-                {
-                    //创建输出剪辑文件
-                    using (var writer = File.Create(outputPath))
-                    {
-                        Mp3Frame frame;
-
-                        //遍历音频每一帧
-
-                        while ((frame = reader.ReadNextFrame()) != null)
-
-                            if (reader.CurrentTime >= start)
-                            {
-
-                                if (reader.CurrentTime <= end)
-                                {
-                                    //时间数值属于音频时长正常范围 写入文件
-
-                                    writer.Write(frame.RawData, 0, frame.RawData.Length);
-                                }
-
-                                else
-                                {
-                                    //超出音频时间范围跳出
-
-                                    break;
-
-                                }
-                            }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-        }
-
-        public TimeSpan StartTime = new TimeSpan();
-        public TimeSpan EndTime = new TimeSpan();
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            spectrumViewer.PenColor = Color.GreenYellow;
-            spectrumViewer.PenWidth = 2;
-
-            originalSpectrogramViewer.Area = spectrogramVisualizationTab.TabPages[1];
-
-            originalPosition = new Position(originalCurrentTime);
-            originalPosition.CurrentTime = new TimeSpan(0);
+          private Directions direction;
+          private int tmpCount = 0;
 
 
-            StartTime = new TimeSpan(0);
-            EndTime = new TimeSpan(0);
+          private WaveFileWriter waveWriter = null;
+
+          public string CurrentFile = "";
+
+          public int CurrentRowid = 0;
+
+          public void SetMp3File(int Rowid,string Source,string TimeRange)
+          {
+              if (TimeRange.Trim().Length > 0)
+              {
+                  if (TimeRange.Contains("-"))
+                  {
+                      long GetStart = ConvertHelper.ObjToLong(TimeRange.Split('-')[0]);
+                      long GetEnd = ConvertHelper.ObjToLong(TimeRange.Split('-')[1]);
+
+                      originalWaveViewer.CutStart = new TimeSpan(GetStart);
+                      originalWaveViewer.CutEnd = new TimeSpan(GetEnd);
+
+                      DeFine.ActiveEdit.CutTimeByStart.Text = (originalWaveViewer.CutStart.Ticks * 100).ToString();
+                      DeFine.ActiveEdit.CutTimeByEnd.Text = (originalWaveViewer.CutEnd.Ticks * 100).ToString();
+                      originalWaveViewer.FitToScreen();
+                  }
+              }
+              CurrentRowid = Rowid;
+
+              AudioFile file = null;
+              Mp3FileReader reader = new Mp3FileReader(Source);
+              WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(reader);
+              BlockAlignReductionStream stream = new BlockAlignReductionStream(pcm);
+              file = new MP3File(reader, stream, Source);
+
+              files.Add(file);
+
+              if (files.Count == 1)
+              {
+                  this.initAudio(file);
+              }
+              CurrentFile = Source;
+          }
+
+          void CutMp3(string filePath, string outputPath, TimeSpan start, TimeSpan end)
+          {
+              try
+              {
+                  start = new TimeSpan(start.Ticks * 100);
+                  end = new TimeSpan(end.Ticks * 100);
+                  //读取mp3音频文件
+                  using (var reader = new Mp3FileReader(filePath))
+                  {
+                      //创建输出剪辑文件
+                      using (var writer = File.Create(outputPath))
+                      {
+                          Mp3Frame frame;
+
+                          //遍历音频每一帧
+
+                          while ((frame = reader.ReadNextFrame()) != null)
+
+                              if (reader.CurrentTime >= start)
+                              {
+
+                                  if (reader.CurrentTime <= end)
+                                  {
+                                      //时间数值属于音频时长正常范围 写入文件
+
+                                      writer.Write(frame.RawData, 0, frame.RawData.Length);
+                                  }
+
+                                  else
+                                  {
+                                      //超出音频时间范围跳出
+
+                                      break;
+
+                                  }
+                              }
+                      }
+                  }
+              }
+              catch (Exception ex)
+              {
+
+              }
+
+          }
+
+          public TimeSpan StartTime = new TimeSpan();
+          public TimeSpan EndTime = new TimeSpan();
+
+          private void MainForm_Load(object sender, EventArgs e)
+          {
+              spectrumViewer.PenColor = Color.GreenYellow;
+              spectrumViewer.PenWidth = 2;
+
+              originalSpectrogramViewer.Area = spectrogramVisualizationTab.TabPages[1];
+
+              originalPosition = new Position(originalCurrentTime);
+              originalPosition.CurrentTime = new TimeSpan(0);
 
 
-
-            output = new WaveOut();
-            output.Volume = 1f;
-            output.PlaybackStopped += Output_PlaybackStopped;
-        }
+              StartTime = new TimeSpan(0);
+              EndTime = new TimeSpan(0);
 
 
 
-        private void initAudio(AudioFile f)
-        {
-            this.currentAudio = f;
-            try
-            {
-                output.Init(f.Stream);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("该文件无法播放.", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.files.Remove(f);
-
-                return;
-            }
-            originalSpectrogramViewer.Audio = f;
-
-            originalWaveViewer.Spectrogram = originalSpectrogramViewer;
-            originalWaveViewer.Spectrum = spectrumViewer;
-            originalWaveViewer.Audio = f;
-            originalWaveViewer.FitToScreen();
-
-            spectrumViewer.Audio = f;
-
-
-            originalVizualizationTab.TabPages[0].Text = "编辑: " + f.Name + "." + f.Format;
-            audioRate.Text = f.SampleRate + " Hz";
-            audioSize.Text = Math.Round(f.Size, 1).ToString() + " MB";
-            audioLength.Text = Position.getTimeString(f.Duration);
-        }
+              output = new WaveOut();
+              output.Volume = 1f;
+              output.PlaybackStopped += Output_PlaybackStopped;
+          }
 
 
 
-        // Pause
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            if (output != null && currentAudio != null)
-            {
-                if (output.PlaybackState == PlaybackState.Playing)
-                {
-                    output.Pause();
-                    originalPlayTimer.Enabled = false;
-                    spectrumTimer.Enabled = false;
-                    audioStatus.Text = "暂停: " + currentAudio.Name + "." + currentAudio.Format;
-                }
-            }
-        }
+          private void initAudio(AudioFile f)
+          {
+              this.currentAudio = f;
+              try
+              {
+                  output.Init(f.Stream);
+              }
+              catch (Exception)
+              {
+                  MessageBox.Show("该文件无法播放.", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                  this.files.Remove(f);
 
-        // Play
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            if (output != null && currentAudio != null)
-            {
-                if (output.PlaybackState != PlaybackState.Playing)
-                {
-                    output.Play();
-                    originalPlayTimer.Enabled = true;
-                    spectrumTimer.Enabled = true;
-                    audioStatus.Text = "回放: " + currentAudio.Name + "." + currentAudio.Format;
-                }
-            }
-        }
-        public void End()
-        {
-            if (output != null && currentAudio != null)
-            {
-                currentAudio.Stream.Position = 0;
-                output.Stop();
-                originalPlayTimer.Enabled = false;
-                originalPosition.CurrentTime = new TimeSpan(0);
-                spectrumTimer.Enabled = false;
-                audioStatus.Text = "已停止: " + currentAudio.Name + "." + currentAudio.Format;
-            }
-        }
-        // Stop
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            StartTime = new TimeSpan(0);
-            EndTime = new TimeSpan(0);
-            originalWaveViewer.FitToScreen();
+                  return;
+              }
+              originalSpectrogramViewer.Audio = f;
 
-            End();
-        }
+              originalWaveViewer.Spectrogram = originalSpectrogramViewer;
+              originalWaveViewer.Spectrum = spectrumViewer;
+              originalWaveViewer.Audio = f;
+              originalWaveViewer.FitToScreen();
 
-        private void Output_PlaybackStopped(object sender, StoppedEventArgs e)
-        {
-            originalPlayTimer.Stop();
-            spectrumTimer.Stop();
-            audioStatus.Text = "已停止: " + currentAudio.Name + "." + currentAudio.Format;
-            currentAudio.Stream.Position = 0;
-        }
+              spectrumViewer.Audio = f;
+
+
+              originalVizualizationTab.TabPages[0].Text = "编辑: " + f.Name + "." + f.Format;
+              audioRate.Text = f.SampleRate + " Hz";
+              audioSize.Text = Math.Round(f.Size, 1).ToString() + " MB";
+              audioLength.Text = Position.getTimeString(f.Duration);
+          }
 
 
 
-        /* Методы перемотки */
+          // Pause
+          private void toolStripButton3_Click(object sender, EventArgs e)
+          {
+              if (output != null && currentAudio != null)
+              {
+                  if (output.PlaybackState == PlaybackState.Playing)
+                  {
+                      output.Pause();
+                      originalPlayTimer.Enabled = false;
+                      spectrumTimer.Enabled = false;
+                      audioStatus.Text = "暂停: " + currentAudio.Name + "." + currentAudio.Format;
+                  }
+              }
+          }
 
-        // Back
-        private void back()
+          // Play
+          private void toolStripButton1_Click(object sender, EventArgs e)
+          {
+              if (output != null && currentAudio != null)
+              {
+                  if (output.PlaybackState != PlaybackState.Playing)
+                  {
+                      output.Play();
+                      originalPlayTimer.Enabled = true;
+                      spectrumTimer.Enabled = true;
+                      audioStatus.Text = "回放: " + currentAudio.Name + "." + currentAudio.Format;
+                  }
+              }
+          }
+          public void End()
+          {
+              if (output != null && currentAudio != null)
+              {
+                  currentAudio.Stream.Position = 0;
+                  output.Stop();
+                  originalPlayTimer.Enabled = false;
+                  originalPosition.CurrentTime = new TimeSpan(0);
+                  spectrumTimer.Enabled = false;
+                  audioStatus.Text = "已停止: " + currentAudio.Name + "." + currentAudio.Format;
+              }
+          }
+          // Stop
+          private void toolStripButton2_Click(object sender, EventArgs e)
+          {
+              StartTime = new TimeSpan(0);
+              EndTime = new TimeSpan(0);
+              originalWaveViewer.FitToScreen();
+
+              End();
+          }
+
+          private void Output_PlaybackStopped(object sender, StoppedEventArgs e)
+          {
+              originalPlayTimer.Stop();
+              spectrumTimer.Stop();
+              audioStatus.Text = "已停止: " + currentAudio.Name + "." + currentAudio.Format;
+              currentAudio.Stream.Position = 0;
+          }
+
+
+
+          /* Методы перемотки */
+
+    // Back
+    private void back()
         {
             long position = this.currentAudio.Stream.Position;
             if (currentAudio.Format == AudioFormats.MP3)

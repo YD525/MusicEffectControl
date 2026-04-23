@@ -8,7 +8,7 @@ namespace MusicEffectControl.MusicManage
 {
     public class YiXunApi
     {
-        public static string Host = "http://yixunsoft.top/dubBgMusic/";
+        public static string Host = "http://XXX.top/dubBgMusic/";
 
         public static MusicTag[] QueryTypes()
         {
