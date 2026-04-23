@@ -1,0 +1,1 @@
+Uploading it to GitHub is just for posterity, since it was written a long time ago. The MainForm.cs class also contains three controls for this form, used to edit waveforms and adjust speed. I forgot which framework it used; it's been a long time, probably Ray Molenkamp.
